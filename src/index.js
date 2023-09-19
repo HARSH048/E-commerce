@@ -1,0 +1,16 @@
+const express = require("express");
+const app = express();
+const { PORT } = require("./config/serverconfig");
+const bodyParser = require("body-parser");
+const connect = require("./config/db");
+const userRoutes = require("./routes/user");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/api/user", userRoutes);
+
+app.listen(PORT, async () => {
+  console.log(`server is running on ${PORT}`);
+  await connect();
+  console.log("mongodb connected");
+});
